@@ -1,4 +1,5 @@
 title Optimizer by Decation
+::MAIN MENU
 @ECHO off
 :MAINMENU
 CLS
@@ -9,7 +10,7 @@ ECHO			    Options:
 ECHO			    [ 1 ] Disable NVIDIA Telemetry
 ECHO			    [ 2 ] Disable windows telemetry and cortana
 SET /p _choice=     Enter your choice:
-
+@REM checking the choice
 IF /I "%_choice%" == "1" (
 	GOTO OPTION1
 	)
@@ -24,8 +25,10 @@ IF /I "%_choice%" == "1" (
 SCHTASKS /Change /TN "\NvTmMon_{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8}" /Disable 
 SCHTASKS /Change /TN "\NvTmRep_{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8}" /Disable
 SCHTASKS /Change /TN "\NvTmRepOnLogon_{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8}" /Disable
-
-::Second option to disable windows telemetry and cortana
+@REM sending the user back to menu
+goto :MAINMENU
+@REM Option2
+:OPTION2
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCortana" /t REG_DWORD /d 0 /f
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 0 /f
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableUAR" /t REG_DWORD /d 1 /f
@@ -50,3 +53,5 @@ REG ADD "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemet
 REG ADD "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0" /v "f!dss-winrt-telemetry.js" /t REG_DWORD /d 0 /f
 REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Internet Explorer\Main" /v "RunOnceComplete" /t REG_DWORD /d 1 /f
 REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "CortanaEnabled" /t REG_DWORD /d 0 /f
+@REM sending the user back to menu
+goto :MAINMENU
